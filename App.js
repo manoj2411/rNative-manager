@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import Config from 'react-native-config';
 import firebase from 'firebase';
 import reducers from './src/reducers';
-
+import LoginForm from './src/components/LoginForm';
 
 export default class App extends Component {
   constructor(props) {
@@ -24,10 +23,7 @@ export default class App extends Component {
   render() {
     return (
       <Provider store={createStore(reducers)}>
-        <View>
-          <Text>Welcome to React Native!</Text>
-          <Text>{Config.DatabaseURL}</Text>
-        </View>
+        <LoginForm />
       </Provider>
     );
   }
