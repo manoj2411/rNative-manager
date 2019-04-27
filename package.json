@@ -12,7 +12,8 @@
     "react-native": "0.59.5",
     "react-native-config": "0.11.5",
     "react-redux": "^7.0.2",
-    "redux": "^4.0.1"
+    "redux": "^4.0.1",
+    "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
     "@babel/core": "7.4.3",
