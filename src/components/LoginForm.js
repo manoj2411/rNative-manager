@@ -1,7 +1,7 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
-import { Card, CardSection, Input, Button, Header } from './common';
+import { Card, CardSection, Input, Button, Header, Spinner } from './common';
 import { emailChanged, passwordChanged, loginUser } from '../actions';
 
 class LoginForm extends React.Component {
@@ -19,11 +19,24 @@ class LoginForm extends React.Component {
     this.props.loginUser({ email, password });
   }
 
+  renderButton() {
+    if (this.props.loading) {
+      return <Spinner />;
+    }
+
+    return (
+      <Button onPress={this.loginBtnPressHandler.bind(this)}>
+        Log in
+      </Button>
+    );
+  }
+
   render() {
     return (
       <View>
         <Header headerText="Login" />
         <Card>
+
           <CardSection>
             <Input
               label="Email"
@@ -32,31 +45,40 @@ class LoginForm extends React.Component {
               value={this.props.email}
             />
           </CardSection>
+
           <CardSection>
             <Input
               secureTextEntry
               label="Password"
               placeholder="mypassword"
               onChangeText={this.passwordChangeHandler.bind(this)}
-              value={this.props.passwords}
+              value={this.props.password}
             />
           </CardSection>
+
+          <Text style={styles.errorText}>{this.props.error}</Text>
+
           <CardSection>
-            <Button onPress={this.loginBtnPressHandler.bind(this)}>
-              Log in
-            </Button>
+            {this.renderButton()}
           </CardSection>
+
         </Card>
       </View>
     );
   }
 }
 
+const styles = {
+  errorText: {
+    color: 'red',
+    fontSize: 20,
+    alignSelf: 'center'
+  }
+};
+
 const mapStateToProps = state => {
-  return {
-    email: state.auth.email,
-    password: state.auth.password
-  };
+  const { email, password, error, loading } = state.auth;
+  return { email, password, error, loading };
 };
 
 export default connect(mapStateToProps,
