@@ -34,7 +34,6 @@ class LoginForm extends React.Component {
   render() {
     return (
       <View>
-        <Header headerText="Login" />
         <Card>
 
           <CardSection>
