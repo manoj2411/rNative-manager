@@ -2,9 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Picker } from 'react-native';
 import { Card, CardSection, Button, Input, Label } from './common';
-import { employeeUpdate } from '../actions';
+import { employeePropChange, employeeCreate } from '../actions';
 
 class EmployeeCreate extends React.Component {
+  handleSubmit() {
+    const { name, phone, shift } = this.props;
+    this.props.employeeCreate({ name, phone, shift: shift || 'Monday' });
+  }
 
   render() {
     return (
@@ -13,7 +17,7 @@ class EmployeeCreate extends React.Component {
           <Input
             label="Name"
             placeholder="Tom"
-            onChangeText={value => this.props.employeeUpdate({ prop: 'name', value })}
+            onChangeText={value => this.props.employeePropChange({ prop: 'name', value })}
             value={this.props.name}
           />
         </CardSection>
@@ -22,7 +26,7 @@ class EmployeeCreate extends React.Component {
           <Input
             label="Phone"
             placeholder="888 888 8888"
-            onChangeText={value => this.props.employeeUpdate({ prop: 'phone', value })}
+            onChangeText={value => this.props.employeePropChange({ prop: 'phone', value })}
             value={this.props.phone}
           />
         </CardSection>
@@ -31,7 +35,7 @@ class EmployeeCreate extends React.Component {
           <Label text="Shift" />
           <Picker
             selectedValue={this.props.shift}
-            onValueChange={value => this.props.employeeUpdate({ prop: 'shift', value })}
+            onValueChange={value => this.props.employeePropChange({ prop: 'shift', value })}
           >
             <Picker.Item label="Monday" value="Monday" />
             <Picker.Item label="Tuesday" value="Tuesday" />
@@ -44,7 +48,7 @@ class EmployeeCreate extends React.Component {
         </CardSection>
 
         <CardSection>
-          <Button onPress={() => console.log(this.props)}>
+          <Button onPress={this.handleSubmit.bind(this)}>
             Create
           </Button>
         </CardSection>
@@ -59,4 +63,4 @@ const mapStateToProps = state => {
   return { name, phone, shift };
 };
 
-export default connect(mapStateToProps, { employeeUpdate })(EmployeeCreate);
+export default connect(mapStateToProps, { employeePropChange, employeeCreate })(EmployeeCreate);
