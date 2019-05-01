@@ -1,3 +1,5 @@
+import firebase from 'firebase';
+
 import { EMPLOYEE_PROP_CHANGE, EMPLOYEE_CREATE } from './types';
 
 export const employeePropChange = ({ prop, value }) => {
@@ -8,8 +10,13 @@ export const employeePropChange = ({ prop, value }) => {
 };
 
 export const employeeCreate = ({ name, phone, shift }) => {
-  console.log(name, phone, shift);
-  return {
-    type: EMPLOYEE_CREATE
-  }
+  return (dipatch) => {
+    const { currentUser } = firebase.auth();
+    console.log(currentUser);
+
+    firebase.database().ref(`/users/${currentUser.uid}/employees`)
+    .push({ name, phone, shift })
+    .then(obj => console.log(obj))
+    .catch(err => console.log(err));
+  };
 };
