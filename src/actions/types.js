@@ -5,4 +5,5 @@ export const LOGIN_FAIL = 'login_user_failure';
 export const LOGIN_START = 'login_user_start';
 
 export const EMPLOYEE_PROP_CHANGE = 'employee_prop_change';
-export const EMPLOYEE_CREATE = 'employee_create';
+export const EMPLOYEE_CREATED = 'employee_created';
+export const EMPLOYEES_FETCH_SUCCESS = 'employees_fetch_success';
