@@ -11,6 +11,8 @@ class EmployeeCreate extends React.Component {
   }
 
   render() {
+    console.log(this.props.employee);
+
     return (
       <Card>
         <CardSection>
