@@ -1,6 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
 import { connect } from 'react-redux';
+import Communications from 'react-native-communications';
 import { Card, CardSection, Button } from './common';
 import EmployeeForm from './EmployeeForm';
 import { employeePropChange, employeeUpdate } from '../actions';
@@ -20,16 +21,28 @@ class EmployeeEdit extends React.Component {
     this.props.employeeUpdate({ name, phone, shift, uid: employee.uid });
   }
 
+  handleTextSend() {
+    const { name, phone, shift } = this.props;
+    const message = `Hi ${name}, your upcoming shift is on ${shift}.`;
+    Communications.text(phone, message);
+  }
+
   render() {
     return (
       <Card>
         <EmployeeForm />
+
         <CardSection>
           <Button onPress={this.handleSubmit.bind(this)}>
             Update
           </Button>
         </CardSection>
 
+        <CardSection>
+          <Button onPress={this.handleTextSend.bind(this)}>
+            Send text
+          </Button>
+        </CardSection>
       </Card>
     );
   }
