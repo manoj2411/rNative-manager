@@ -1,11 +1,19 @@
 import firebase from 'firebase';
 import { Actions } from 'react-native-router-flux';
-import { EMPLOYEE_PROP_CHANGE, EMPLOYEE_CREATED, EMPLOYEES_FETCH_SUCCESS } from './types';
+import {
+  EMPLOYEE_PROP_CHANGE, EMPLOYEE_CREATED, EMPLOYEES_FETCH_SUCCESS, EMPLOYEE_PROPS_RESET
+} from './types';
 
 export const employeePropChange = ({ prop, value }) => {
   return {
     type: EMPLOYEE_PROP_CHANGE,
     payload: { prop, value }
+  };
+};
+
+export const employeeFormReset = () => {
+  return {
+    type: EMPLOYEE_PROPS_RESET
   };
 };
 
