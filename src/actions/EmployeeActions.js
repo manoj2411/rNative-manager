@@ -33,3 +33,15 @@ export const employeesFetch = () => {
       });
   };
 };
+
+export const employeeUpdate = ({ name, phone, shift, uid }) => {
+  return () => {
+    const { currentUser } = firebase.auth();
+    firebase.database().ref(`/users/${currentUser.uid}/employees/${uid}`)
+      .set({ name, phone, shift })
+      .then(() => {
+        Actions.employeesList({ type: 'reset' });
+        // dispatch({ type: EMPLOYEE_CREATED });
+      });
+  };
+};
