@@ -53,3 +53,15 @@ export const employeeUpdate = ({ name, phone, shift, uid }) => {
       });
   };
 };
+
+export const employeeDelete = ({ uid }) => {
+  return () => {
+    const { currentUser } = firebase.auth();
+    firebase.database().ref(`/users/${currentUser.uid}/employees/${uid}`)
+      .remove()
+      .then(() => {
+        Actions.employeesList({ type: 'reset' });
+      })
+      .catch(err => console.log(err));
+  };
+};

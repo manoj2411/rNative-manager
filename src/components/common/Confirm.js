@@ -19,7 +19,7 @@ const Confirm = ({ children, visible, onAccept, onDeny }) => (
       </CardSection>
 
       <CardSection>
-        <Button opPress={onAccept}>
+        <Button onPress={onAccept}>
           Yes
         </Button>
         <Button onPress={onDeny}>

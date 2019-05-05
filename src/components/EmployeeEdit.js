@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Communications from 'react-native-communications';
 import { Card, CardSection, Button, Confirm } from './common';
 import EmployeeForm from './EmployeeForm';
-import { employeePropChange, employeeUpdate } from '../actions';
+import { employeePropChange, employeeUpdate, employeeDelete } from '../actions';
 
 class EmployeeEdit extends React.Component {
 
@@ -26,6 +26,14 @@ class EmployeeEdit extends React.Component {
     const { name, phone, shift } = this.props;
     const message = `Hi ${name}, your upcoming shift is on ${shift}.`;
     Communications.text(phone, message);
+  }
+  handleDeny() {
+    console.log('Cancelling');
+    this.setState({ modalVisibility: false });
+  }
+
+  handleAccept() {
+    this.props.employeeDelete({ uid: this.props.employee.uid });
   }
 
   render() {
@@ -51,7 +59,11 @@ class EmployeeEdit extends React.Component {
           </Button>
         </CardSection>
 
-        <Confirm visible={this.state.modalVisibility}>
+        <Confirm
+          visible={this.state.modalVisibility}
+          onAccept={this.handleAccept.bind(this)}
+          onDeny={this.handleDeny.bind(this)}
+        >
           Are you sure you want to fire her?
         </Confirm>
 
@@ -65,4 +77,6 @@ const mapStateToProps = state => {
   return { name, phone, shift };
 };
 
-export default connect(mapStateToProps, { employeePropChange, employeeUpdate })(EmployeeEdit);
+export default connect(mapStateToProps,
+                       { employeePropChange, employeeUpdate, employeeDelete }
+                      )(EmployeeEdit);
